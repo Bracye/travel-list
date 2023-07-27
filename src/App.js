@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Logo from "./components/Logo";
 import Form from "./components/Form";
 import PackingList from "./components/PackingList";
@@ -10,10 +10,12 @@ const initialItems = [
 ];
 
 function App() {
-  const [items, setItems] = useState(initialItems); // Initialize items with initialItems
+  const [items, setItems] = useState(initialItems);
 
   const handleAddItems = (item) => {
-    setItems([...items, item]);
+    // Generate a unique ID using a timestamp
+    const uniqueId = Date.now();
+    setItems([...items, { ...item, id: uniqueId }]);
   };
 
   const handleDeleteItems = (id) => {
@@ -27,12 +29,13 @@ function App() {
       )
     );
   };
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
       <PackingList
-        items={items} // Use the items state instead of initialItems
+        items={items}
         onDeleteItem={handleDeleteItems}
         onToggle={handleToggleItem}
       />
